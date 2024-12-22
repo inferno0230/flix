@@ -9,8 +9,13 @@
 #define ONE_G 9.80665
 
 // NOTE: use 'ca' command to calibrate the accelerometer and put the values here
+#ifndef CALIBRATED
 Vector accBias(0, 0, 0);
 Vector accScale(1, 1, 1);
+#else
+Vector accBias(0.175433, 0.090148, -0.384449);
+Vector accScale(0.986217, 0.923433, 1.014048);
+#endif
 
 MPU9250 IMU(SPI, 5);
 Vector gyroBias;
@@ -59,7 +64,11 @@ void calibrateGyro() {
 	Serial.println("Calibrating gyro, stand still");
 	IMU.setGyroRange(IMU.GYRO_RANGE_250DPS); // the most sensitive mode
 
+#ifndef CALIBRATED
 	gyroBias = Vector(0, 0, 0);
+#else
+	gyroBias = Vector(-0.026140, -0.012332, -0.007151);
+#endif
 	for (int i = 0; i < samples; i++) {
 		IMU.waitForData();
 		IMU.getGyro(gyro.x, gyro.y, gyro.z);
