@@ -12,7 +12,7 @@
 Vector accBias(0, 0, 0);
 Vector accScale(1, 1, 1);
 
-MPU9250 IMU(SPI);
+MPU9250 IMU(SPI, 5);
 Vector gyroBias;
 
 void setupIMU() {
